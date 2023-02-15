@@ -1,12 +1,12 @@
 # Trips Data Ingestion and Analysis
 This is a Python-based solution for ingesting and analyzing trips data. It uses an API endpoint to automate the on-demand data ingest and stores the data in a PostgresSQL database. The solution is designed to be scalable to handle up to 100 million entries.
 
-##Prerequisites
+## Prerequisites
 - Python 3.10 or higher
 - Docker
 - Docker Compose
 
-##Getting Started
+## Getting Started
 1. Clone the repository to your local machine:
 
 ```bash
@@ -52,8 +52,8 @@ This endpoint will return a JSON response containing the weekly average number o
 ##Configuration
 The configuration for the data ingest script can be modified by changing the values in the **`config.yml`** file.
 
-##Scaling
+## Scaling
 This solution is designed to be scalable to handle up to 100 million entries. The PostgresSQL database is used to store the data, and it can be easily scaled by adding more database nodes. The Docker Compose file can be modified to add more database nodes.
 
-License
+## License
 Free.
