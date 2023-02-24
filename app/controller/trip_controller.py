@@ -13,3 +13,7 @@ def filter_by_date(date) -> List[Trip]:
 
 def filter_by_region(region) -> List[Trip]:
     return trip_db.filter_by_region(region)
+
+
+def average_trips(region, start_date, end_date) -> List[Trip]:
+    return trip_db.average_trips(region, start_date, end_date)

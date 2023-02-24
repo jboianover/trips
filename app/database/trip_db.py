@@ -24,33 +24,26 @@ def list_all() -> List[Trip]:
     return trips
 
 
-# def get_average_trips(**data) -> List[Trip]:
-#     bounding_box = data.get('bounding_box')
-#    # region = data.get('region')
-#     start_date = data.get['start_date']
-#     end_date = data.get['end_date']
+def average_trips(region, start_date, end_date) -> List[Trip]:
 
-#     if bounding_box:
-#         query = (
-#             f"SELECT COUNT(*) / 7 AS average_trips FROM trip "
-#             f"WHERE origin_lat BETWEEN {bounding_box[0]} AND {bounding_box[2]} "
-#             f"AND origin_long BETWEEN {bounding_box[1]} AND {bounding_box[3]} "
-#             f"AND date BETWEEN '{start_date}' AND '{end_date}'"
-#         )
-#     else:
-#         query = (
-#             f"SELECT COUNT(*) / 7 AS average_trips FROM trip "
-#             f"WHERE ST_Intersects(ST_GeomFromText('{region}'), "
-#             f"ST_Point(origin_lat, origin_long)) "
-#             f"AND date BETWEEN '{start_date}' AND '{end_date}'"
-#         )
-#     records = _fetch_rows(query)
+    query = (f"""
+    SELECT COUNT(*) / 7 AS average_trips FROM trip
+    WHERE region = '{region}'
+    AND date BETWEEN '{start_date}' AND '{end_date}'""")
+    records = _fetch_rows(query)
+    trips = []
+    for row in records:
+        average_trips = row.average_trips
+        trips.append(average_trips)
+
+    return trips
+
 
 def filter_by_date(date) -> List[Trip]:
 
     query = (f"""
     SELECT * FROM trip
-    WHERE date >= '{date}'
+    WHERE date = '{date}'
     """
              )
     records = _fetch_rows(query)
@@ -71,11 +64,12 @@ def filter_by_date(date) -> List[Trip]:
 
     return trips
 
+
 def filter_by_region(region) -> List[Trip]:
 
     query = (f"""
     SELECT * FROM trip
-    WHERE region >= '{region}'
+    WHERE region = '{region}'
     """
              )
     records = _fetch_rows(query)

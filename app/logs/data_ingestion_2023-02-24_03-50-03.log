@@ -1,0 +1,8 @@
+2023-02-24 03:50:03,048 INFO:Starting data ingestion...
+2023-02-24 03:50:03,051 INFO:These are the csv files to be processed: ['trips.csv'].
+2023-02-24 03:50:03,404 INFO:Truncating the stage_trip table.
+2023-02-24 03:50:03,413 INFO:Processing the file trips.csv.
+2023-02-24 03:50:03,581 INFO:Inserting the rows from the file to the stage_trip table.
+2023-02-24 03:50:03,667 INFO:Insert successful.
+2023-02-24 03:50:03,674 INFO:Inserting data from the stage_trip to the trip table.
+2023-02-24 03:50:03,680 INFO:Insert successful.

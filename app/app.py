@@ -3,7 +3,6 @@ import logging
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from controller import trip_controller
-# , region_controller
 
 
 app = Flask(__name__)
@@ -29,13 +28,19 @@ def get_trips():
     return jsonify({'trips': trips, 'trips_count': len(trips)}), 200
 
 
-# @app.route('/regions', methods=['GET'])
-# def get_regions():
-#     result = region_controller.lists()
-#     if len(result) == 0:
-#         return jsonify({'message': 'No regions found.'}), 404
-#     regions = [region._asdict() for region in result]
-#     return jsonify({'regions': regions, 'regions_count': len(regions)}), 200
+@app.route('/average_trips', methods=['GET'])
+def get_average_trips():
+    region = request.args.get('region')
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    if not start_date or not end_date or not region:
+        return jsonify({'message': 'Region, start_date and end_date must be provided.'}), 400
+    else:
+        result = trip_controller.average_trips(region, start_date, end_date)
+    if len(result) == 0:
+        return jsonify({'message': 'No trips found.'}), 404
+    trips = [trip for trip in result]
+    return jsonify({'average_trips': trips, 'regions_count': len(trips)}), 200
 
 
 if __name__ == '__main__':

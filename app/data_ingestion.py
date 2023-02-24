@@ -50,10 +50,9 @@ def process_raw_file(filename):
 
                 # Rename datasource column to vehicle
                 df.rename(columns={'datasource': 'vehicle'}, inplace=True)
-                print(df)
-                # insert data into the database in chunks
                 try:
                     logging.info('Inserting the rows from the file to the stage_trip table.')
+                    # insert data into the database in chunks
                     df.to_sql('stage_trip', con=engine, if_exists='append',
                               index=False, chunksize=1000)
                     logging.info('Insert successful.')
@@ -73,10 +72,8 @@ def extract_load_trips():
     data_dir = '/app/data-input'
     processed_dir = '/app/data-input/processed/'
     files = os.listdir(data_dir)
-    # csv_files = ['/Users/jonathan.boianover/Documents/GitHub/trips/data/trips.csv']
     csv_files = [f for f in files if f.endswith('.csv')]
     logging.info(f'These are the csv files to be processed: {csv_files}.')
-    # engine = create_engine('postgresql://admin:admin@localhost:5432/trips_challenge')
     engine = create_engine(os.environ['DATABASE_URL'])
     with engine.connect() as conn:
         logging.info('Truncating the stage_trip table.')
@@ -84,7 +81,7 @@ def extract_load_trips():
         conn.execute(text("""
             TRUNCATE TABLE stage_trip;
         """))
-        print('delete stage_trip successful')
+        logging.info('Truncate successful.')
         conn.commit()
         # Loop over the CSV files and process each one
         print(f'csv_files: {csv_files}')
@@ -92,8 +89,10 @@ def extract_load_trips():
             filename = os.path.join(data_dir, file)
             logging.info(f'Processing the file {file}.')
             process_raw_file(filename)
+            logging.info(f'Processed the file {file}.')
             # move the file to the directory
             os.rename(filename, os.path.join(processed_dir, file))
+            logging.info(f'Moved the file {file} to /processed.')
         try:
             logging.info('Inserting data from the stage_trip to the trip table.')
             # Insert the staged data into the actual trip table
