@@ -1,5 +1,5 @@
 # Use a PostgreSQL base image
-FROM postgres:12
+FROM postgres:15
 
 # Copy the SQL script to initialize the database
 COPY init.sql /docker-entrypoint-initdb.d/

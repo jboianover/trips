@@ -1,23 +1,26 @@
 version: '3'
-
 services:
   db:
     build: ./db
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: trips
+      POSTGRES_DB: trips_challenge
+    container_name: postgres_host
+    volumes:
+      - db-data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    volumes:
-      - mydb:/var/lib/postgresql/data
-
   app:
     build: ./app
     ports:
-      - "5000:5000"
+      - "5005:5005"
+    env_file:
+      - .env
     depends_on:
       - db
+    volumes:
+       - ./app:/app
 
 volumes:
-  mydb:
+  db-data:
