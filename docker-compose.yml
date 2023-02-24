@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    build: ./db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: trips_challenge
+    container_name: postgres_host
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+  app:
+    build: ./app
+    ports:
+      - "5005:5005"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+       - ./app:/app
+       - ./app/data-input:/app/data-input
+
+volumes:
+  db-data:
