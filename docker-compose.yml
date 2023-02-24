@@ -21,6 +21,7 @@ services:
       - db
     volumes:
        - ./app:/app
+       - ./app/data-input:/app/data-input
 
 volumes:
   db-data:
