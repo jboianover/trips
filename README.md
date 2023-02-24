@@ -30,7 +30,7 @@ You can modify the values as needed. These values will be used by the Docker Com
 
 4. Build and start the Docker containers using Docker Compose:
 ```bash
-docker-compose up --d
+docker-compose up -d
 ```
 
 This command will build and start the Python and PostgresSQL containers. The Flask API inside one of the containers will automatically start.
@@ -73,12 +73,14 @@ http://localhost:5005/average_trips?region=some_region&start_date=YYYY-MM-DD&end
 ```
 This endpoint will return a JSON response containing the list of the average number of trips for the specified region.
 
-##Configuration
-The configuration for the data ingest script can be modified by changing the values in the **`config.yml`** file.
-
 ## Scaling
 This solution is designed to be scalable to handle up to 100 million entries. The PostgresSQL database is used to store the data, and it can be easily scaled by adding more database nodes. The Docker Compose file can be modified to add more database nodes.
 Also the code is prepared to iterate through big csv files and read them in chunks son pandas doesn't affect the memory usage.
+
+## What if we used a Cloud Provider?
+- The Data Ingestion could be run from an AWS Lambda Function.
+- The Flask App could be hosted in an EC2 instance.
+- The database could be hosted in an RDS.
 
 ## License
 Free.
